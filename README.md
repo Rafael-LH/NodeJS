@@ -1,7 +1,7 @@
 # NodeJS
 Let's start with NodeJS
 
----
+___
 
 ### Métodos HTTP:
 
@@ -17,7 +17,7 @@ Let's start with NodeJS
 
 **OPTIONS:** Pedir información sobre métodos (saber si podemos ejecutar alguno de los métodos anteriores).
 
----
+___
 
 ### Estados de la petición
 
@@ -31,4 +31,11 @@ Let's start with NodeJS
 
 **500** Errores del servidor
 
----
+___
+
+### Cuerpo y query de la petición
+**El cuerpo de la petición** es la información en sí que queremos enviar, editar o que el servidor nos devuelva.
+
+**Las queries** van a permitirte añadir información extra a los datos que queramos enviarle al servidor.
+
+___
