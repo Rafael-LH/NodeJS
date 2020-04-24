@@ -7,19 +7,27 @@ const app = express();
 
 app.use(bodyParser.json()); //Le indicamos que lo queremos usar en forma de json
 
+app.get('/', (req, res) => {
+  res.send('Home')
+})
 // de esta manera nuestra aplicación de express respondera a la url / y nos retornara un 'Hola' 
-app.get('/user', function(request, response){ //los dos parametros de una petición request y el response 
- 
- const { message } = request.body
- const query = request.query
- const header = request.headers
+app.get('/user', function (request, response) { //los dos parametros de una petición request y el response 
 
- //Tambien podemos mandar header en la respuesta
- response.header({
-  "Custo-header": "Nuestro valor personalizado"
- });
- 
- response.send(header); //enviamos el mensaje
+  // http://localhost:3000/user?orderBy=id
+
+  const { status, message } = request.body
+  const query = request.query
+  const header = request.headers
+
+  console.log(`Status: ${status}\nInfo ${message}`);
+  console.log(query);
+
+  //Tambien podemos mandar header en la respuesta
+  response.header({
+    "Custo-header": "Nuestro valor personalizado"
+  });
+
+  response.send(header); //enviamos el mensaje
 
 })
 
