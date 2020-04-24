@@ -26,7 +26,7 @@ app.get('/user', function (request, response) { //los dos parametros de una peti
   response.header({
     "Custo-header": "Nuestro valor personalizado"
   });
-
+  console.log(header);
   response.send(header); //enviamos el mensaje
 
 })
