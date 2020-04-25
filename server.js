@@ -41,7 +41,7 @@ app.get('/user', function (req, res) { //los dos parametros de una petición req
 
 app.post('/message', (req, res) => {
   if (req.query.error == 'ok') {
-    response.error(req, res, 'Ha ocurrido algun error ❌', 400)
+    response.error(req, res, 'Ha ocurrido algun error ❌', 500, 'Error de conexion')
   } else {
     response.success(req, res, 'Mensaje creado satisfactoriamente!', 201)
   }
