@@ -1,6 +1,7 @@
-const message = require('../components/message/network')
+const express = require('express');
+const message = require('../components/message/network');
 
-// ha server le estamos pasando app
+// al server le estamos pasando app
 const routes = function (server) {
   server.use('/message', message)
 }
