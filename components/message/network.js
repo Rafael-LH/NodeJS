@@ -4,24 +4,25 @@ const app = express();
 const response = require('../../network/response');
 const controller = require('./controller')
 
-app.get('/', function (req, res) { //los dos parametros de una petición request y el response 
+app.get('/', async function (req, res) { //los dos parametros de una petición request y el response 
 
+  try {
+    console.log('Hola');
+
+    const message = await controller.getMessages();
+    const fullMessage = await message;
+    response.success(req, res, fullMessage, 200);
+  } catch (error) {
+    response.error(req, res, 'Unexpected error', 500, e)
+  }
   // http://localhost:3000/user?orderBy=id
-
-  const { status, message } = req.body
-  const query = req.query
-  const header = req.headers
-
-  console.log(`Status: ${status}\nInfo ${message}`);
-  console.log(query);
-
+  // const { status, message } = req.body
+  // const query = req.query
+  // const header = req.headers
   //Tambien podemos mandar header en la respuesta
-  res.header({
-    "Custo-header": "Nuestro valor personalizado"
-  });
-  console.log(header);
-  // response.send(header); //enviamos el mensaje
-  response.success(req, res, 'Todo ha salido bien');
+  // res.header({
+  //   "Custo-header": "Nuestro valor personalizado"
+  // });
 
 })
 

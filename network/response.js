@@ -2,7 +2,7 @@ exports.success = function (req, res, message, status) {
   res.status(status || 200).send({
     error: '',
     body: {
-      message: 'Registro creado con exito!'
+      message: message
     },
   })
 }
