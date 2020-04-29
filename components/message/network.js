@@ -7,8 +7,6 @@ const controller = require('./controller')
 app.get('/', async function (req, res) { //los dos parametros de una petición request y el response 
 
   try {
-    console.log('Hola');
-
     const message = await controller.getMessages();
     const fullMessage = await message;
     response.success(req, res, fullMessage, 200);

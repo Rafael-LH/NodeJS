@@ -9,14 +9,12 @@ app.use(bodyParser.json()); //Le indicamos que lo queremos usar en forma de json
 
 const files = path.join(__dirname, './public');
 app.use(express.static(files)); // OR
+// Name project    Name static files html / css / images 
+// app.use('/NodeJS', express.static('./public')) 
 
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: 'public' })
 })
-// Name project    Name static files html / css / images 
-// app.use('/NodeJS', express.static('./public')) 
-
-
 
 // const router = require('./components/message/network')
 const router = require('./network/routes');
@@ -24,7 +22,6 @@ router(app);
 
 // le paso mis rutas a app 
 app.use(router);
-
 
 // Para que nuestra aplicación este escuchando las rutas lo hacemos con lo siguiente
 app.listen(PORT);

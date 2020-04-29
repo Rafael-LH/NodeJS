@@ -8,7 +8,7 @@ function addMessage(user, message) {
         message, message,
         data: new Date(),
       }
-      store.add(message);
+      store.add(fullMessage);
       resolve(fullMessage)
     } else {
       console.error('[MessageController] No hay usuario o mensaje');
