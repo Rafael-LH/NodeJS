@@ -16,8 +16,14 @@ function addMessage(message) {
   const myMessage = new Model(message); // recibe un objeto con todos los valores para insertar en nuestra coleccion de mongoDB
   myMessage.save(); // para finalizar la accion llamamos a su metodo save
 }
-async function getMessage() {
-  const messages = await Model.find(); // de esta manera nos traemos todos los datos que esten en nuestra tabla messages. Tiene que ser de forma asincrona
+async function getMessages(filterMessages) {
+  let filter = {}
+  if (filterMessages !== null) {
+    filter = { user: filterMessages }
+  }
+  // Model.find() de esta manera nos traemos todos los datos que esten en nuestra tabla messages. Tiene que ser de forma asincrona
+  // Model.find({user: "Edgar"}) podemos filtar los registros de esta manera
+  const messages = await Model.find(filter);
   return messages;
 }
 async function updateMessage(id, message) {
@@ -39,7 +45,7 @@ async function findMessage(id) {
 
 module.exports = {
   add: addMessage,
-  list: getMessage,
+  list: getMessages,
   get: findMessage,
   update: updateMessage,
   //delete,
