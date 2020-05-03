@@ -1,15 +1,4 @@
-const { uri, database } = require('../../config/')
-const db = require('mongoose');
 const Model = require('./model');
-
-db.Promise = global.Promise; // de esta manera utilizamos la forma nativa de node de hacer promesas
-db.connect(uri, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true, // esta es una configuracion para que no haya problemas de compatibilidad en caso de que el servidor sea más nuevo o mas viejito
-  dbName: database,
-})
-  .then((_) => console.log(`[db] Conectada con éxito!`))
-  .catch(err => console.log(`[db] Ha ocurrido algun error ${err.message}`));
 
 function addMessage(message) {
   // de la siguiente manera es como inserto datos en mongoose, llamo a mi modelo y le paso el message que me llega
@@ -42,11 +31,16 @@ async function findMessage(id) {
   const message = await result;
   return message
 }
-
+const deleteMessage = async id => {
+  await Model.deleteOne({
+    _id: id
+  })
+  return `Mensaje Eliminado!`;
+}
 module.exports = {
   add: addMessage,
   list: getMessages,
   get: findMessage,
   update: updateMessage,
-  //delete,
+  delete: deleteMessage,
 }

@@ -50,11 +50,20 @@ app.patch('/:id', async (req, res) => { // actualiza parte de un registro y PUT 
 app.get('/:id', async (req, res) => {
   try {
     const { id } = req.params
+    const { message, status } = await controller.findMessage(id)
+    response.success(req, res, message, status)
 
-    const result = await controller.findMessage(id)
-    response.success(req, res, result, 200)
   } catch (error) {
     response.error(req, res, 'Mensaje no encontrado ⚠︎', 404, 'Not Found');
+  }
+})
+app.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const result = await controller.deleteMessage(id);
+    response.success(req, res, result, 200);
+  } catch (error) {
+    response.error(req, res, 'Ha ocurrido algun error ☹️', 500, error);
   }
 })
 module.exports = app;

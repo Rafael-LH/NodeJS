@@ -1,5 +1,7 @@
 const store = require('./store');
-
+const responseMessage = {
+  notFound: 'Mensaje no encontrado!'
+}
 function addMessage(user, message) {
   return new Promise((resolve, reject) => {
     if (user, message) {
@@ -28,7 +30,7 @@ function updateMessage(id, message) {
       resolve(result);
     } else {
       console.log(`[MessageController] No hay id o mensaje`);
-      reject(`Mensaje no encontrado`)
+      reject(`${responseMessage.notFound}`)
     }
   })
 }
@@ -36,12 +38,25 @@ function updateMessage(id, message) {
 function findMessage(id) {
   return new Promise(async (resolve, reject) => {
     if (id) {
+
       const message = await store.get(id);
-      resolve(message);
+      if (!message) resolve({ message: `Mensaje no encontrado ⚠︎`, status: 404 });
+      resolve({ message: message, status: 200 });
+
     } else {
       console.log(`[MessageController] No hay mensaje`);
-      reject(`Mensaje no encontrado`)
+      reject(`${responseMessage.notFound}`)
     }
+  })
+}
+function deleteMessage(id) {
+  return new Promise(async (resolve, reject) => {
+    if (id) {
+      const result = await store.delete(id);
+      resolve(result);
+    }
+    console.log(`[MessageController] No hay id`);
+    reject(`${responseMessage.notFound}`);
   })
 }
 module.exports = {
@@ -49,4 +64,5 @@ module.exports = {
   getMessages,
   updateMessage,
   findMessage,
+  deleteMessage,
 };

@@ -5,6 +5,9 @@ const path = require('path');
 const PORT = 3000;
 const app = express();
 
+const db = require('./db')
+db(); // conexion a la base de datos
+
 app.use(bodyParser.json()); //Le indicamos que lo queremos usar en forma de json
 
 const files = path.join(__dirname, './public');
