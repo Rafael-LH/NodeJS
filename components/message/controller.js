@@ -6,7 +6,7 @@ function addMessage(user, message) {
       const fullMessage = {
         user: user,
         message, message,
-        data: new Date(),
+        date: new Date(),
       }
       store.add(fullMessage);
       resolve(fullMessage)
@@ -21,8 +21,32 @@ function getMessages() {
     resolve(store.list());
   })
 }
+function updateMessage(id, message) {
+  return new Promise(async (resolve, reject) => {
+    if (id && message) {
+      const result = await store.update(id, message);
+      resolve(result);
+    } else {
+      console.log(`[MessageController] No hay id o mensaje`);
+      reject(`Mensaje no encontrado`)
+    }
+  })
+}
 
+function findMessage(id) {
+  return new Promise(async (resolve, reject) => {
+    if (id) {
+      const message = await store.get(id);
+      resolve(message);
+    } else {
+      console.log(`[MessageController] No hay mensaje`);
+      reject(`Mensaje no encontrado`)
+    }
+  })
+}
 module.exports = {
   addMessage,
-  getMessages
+  getMessages,
+  updateMessage,
+  findMessage,
 };
