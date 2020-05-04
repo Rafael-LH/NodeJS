@@ -30,4 +30,22 @@ app.delete('/:id', async (req, res) => {
     response.error(req, res, 'Ha ocurrido algun error', error);
   }
 })
+app.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await controller.getUser(id);
+    response.success(req, res, result, 200);
+  } catch (error) {
+    response.error(req, res, `Ha ocurrido algun error: ${error}`, 404, 'Not Found');
+  }
+})
+app.patch('/', async (req, res) => {
+  try {
+    const { id, name } = req.body;
+    const result = await controller.updateUser(id, name);
+    response.success(req, res, result, 200);
+  } catch (error) {
+    response.error(req, res, `Ha ocurrido algun error: ${error}`, 500);
+  }
+})
 module.exports = app;

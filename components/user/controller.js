@@ -37,8 +37,32 @@ function deleteUser(id) {
 
   })
 }
+function getUser(id) {
+  return new Promise((resolve, reject) => {
+    if (id) {
+      const user = store.get(id);
+      resolve(user);
+    } else {
+      console.log(`[UserController] No hay id`);
+      reject('Usuario no encontrado')
+    }
+  })
+}
+function updateUser(id, name) {
+  return new Promise((resolve, reject) => {
+    if (id && name.trim()) {
+      store.update(id, name);
+      resolve(`Registro actualizado con exito!`);
+    } else {
+      console.log(`[UserController] No hay id o nombre de usuario`);
+      reject(`No puedes dejar valores nulos`);
+    }
+  })
+}
 module.exports = {
   addUser,
   getUsers,
   deleteUser,
+  getUser,
+  updateUser,
 }

@@ -20,11 +20,25 @@ async function deleteUser(id) {
   })
   return `Usuario eliminado!`
 }
+async function getUser(id) {
+  const user = await Model.findOne({
+    _id: id
+  })
+  return user;
+}
+async function updateUser(id, name) {
+  const user = await Model.findOne({
+    _id: id
+  })
+  user.name = name;
+  user.save();
+  return user;
+}
 module.exports = {
   add: addUser,
   list: getUsers,
-  // get,
+  get: getUser,
   delete: deleteUser,
-  // update,
+  update: updateUser,
   issetUser: issetUser,
 }

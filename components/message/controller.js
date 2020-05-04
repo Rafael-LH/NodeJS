@@ -38,7 +38,6 @@ function updateMessage(id, message) {
 function findMessage(id) {
   return new Promise(async (resolve, reject) => {
     if (id) {
-
       const message = await store.get(id);
       if (!message) resolve({ message: `Mensaje no encontrado ⚠︎`, status: 404 });
       resolve({ message: message, status: 200 });
