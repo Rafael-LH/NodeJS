@@ -10,8 +10,24 @@ app.post('/', async (req, res) => {
     const result = await controller.addUser(name);
     response.success(req, res, result, 201);
   } catch (error) {
-    response.error(req, res, 'Ha ocurrido algun error', 500, error);
+    response.error(req, res, `${error}`, 500, error);
   }
 })
-
+app.get('/', async (req, res) => {
+  try {
+    const result = await controller.getUsers();
+    response.success(req, res, result, 200);
+  } catch (error) {
+    response.error(req, res, 'Ha ocurrido algun error', 500, error)
+  }
+})
+app.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const result = await controller.deleteUser(id);
+    response.success(req, res, result, 200);
+  } catch (error) {
+    response.error(req, res, 'Ha ocurrido algun error', error);
+  }
+})
 module.exports = app;
