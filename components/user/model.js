@@ -6,5 +6,6 @@ const mySchema = new Schema({
   date: Date
 })
 
+// users (tabla en mysql) is my collection on Atlas MongoDB
 const model = mongoose.model('users', mySchema);
 module.exports = model;

@@ -39,9 +39,10 @@ app.get('/:id', async (req, res) => {
     response.error(req, res, `Ha ocurrido algun error: ${error}`, 404, 'Not Found');
   }
 })
-app.patch('/', async (req, res) => {
+app.patch('/:id', async (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { id } = req.params;
+    const { name } = req.body;
     const result = await controller.updateUser(id, name);
     response.success(req, res, result, 200);
   } catch (error) {

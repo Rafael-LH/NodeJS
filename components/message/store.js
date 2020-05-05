@@ -5,15 +5,24 @@ function addMessage(message) {
   const myMessage = new Model(message); // recibe un objeto con todos los valores para insertar en nuestra coleccion de mongoDB
   myMessage.save(); // para finalizar la accion llamamos a su metodo save
 }
-async function getMessages(filterMessages) {
-  let filter = {}
-  if (filterMessages !== null) {
-    filter = { user: filterMessages }
-  }
-  // Model.find() de esta manera nos traemos todos los datos que esten en nuestra tabla messages. Tiene que ser de forma asincrona
-  // Model.find({user: "Edgar"}) podemos filtar los registros de esta manera
-  const messages = await Model.find(filter);
-  return messages;
+function getMessages(filterMessages) {
+  return new Promise((resolve, reject) => {
+    let filter = {}
+    if (filterMessages !== null) {
+      filter = { user: filterMessages }
+    }
+    // Model.find() de esta manera nos traemos todos los datos que esten en nuestra tabla messages. Tiene que ser de forma asincrona
+    // Model.find({user: "Edgar"}) podemos filtar los registros de esta manera
+    Model.find(filter)
+      .populate('user') // populamos el user porque estoy haciendo una relacion de mis users con mis messages
+      .exec((error, populate) => {  // y para ejecutar el populado lo hacemos con exec
+        if (!error) { //sea a distinto a error
+          resolve(populate); // lo que hacemos es regresar la informacion popupada en caso de que no haya errores
+        } else {
+          reject(error);
+        }
+      });
+  })
 }
 async function updateMessage(id, message) {
   // buscamos nuestro registro en nuestra store

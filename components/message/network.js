@@ -12,7 +12,7 @@ app.get('/', async function (req, res) { //los dos parametros de una petición r
     const fullMessage = await message;
     response.success(req, res, fullMessage, 200);
   } catch (error) {
-    response.error(req, res, 'Unexpected error', 500, e)
+    response.error(req, res, 'Unexpected error', 500, error)
   }
   // http://localhost:3000/user?orderBy=id
   // const { status, message } = req.body
