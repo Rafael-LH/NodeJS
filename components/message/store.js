@@ -14,10 +14,15 @@ function getMessages(filterMessages) {
     // Model.find() de esta manera nos traemos todos los datos que esten en nuestra tabla messages. Tiene que ser de forma asincrona
     // Model.find({user: "Edgar"}) podemos filtar los registros de esta manera
     Model.find(filter)
-      .populate('user') // populamos el user porque estoy haciendo una relacion de mis users con mis messages
-      .exec((error, populate) => {  // y para ejecutar el populado lo hacemos con exec
+      .populate('user') // populate lo que hace es decir si esto es una referencia a otro objeto dentro de nuestra base de datos
+      // buscala he inserta aqui toda la informacion
+      // en mi campo user de messages estoy guardando el id del usuario entonces para hacer la busqueda con populate y insertarla 
+      // en la respues de todos los mensajes lo que hacemos es que nos traemos uno de los tipos de mongo db el cual lo hacemos en
+      // model.js con nuestro Schema nos traemos nuestro ObjectId el cual hara referencia a nuestra coleccion de users
+      // entonces de esta manera es como populate busca los registros que coincidan con el id que estamos insertando en user
+      .exec((error, dataPopulated) => {  // y para ejecutar el populado lo hacemos con exec
         if (!error) { //sea a distinto a error
-          resolve(populate); // lo que hacemos es regresar la informacion popupada en caso de que no haya errores
+          resolve(dataPopulated); // lo que hacemos es regresar la informacion popupada en caso de que no haya errores
         } else {
           reject(error);
         }
