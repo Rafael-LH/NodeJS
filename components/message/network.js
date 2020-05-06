@@ -1,8 +1,13 @@
 const express = require('express');
+const multer = require('multer'); // nos sirve para leer archivos que nos bienen por req y guardar en disco
 const app = express();
 
 const response = require('../../network/response');
 const controller = require('./controller')
+
+const upload = multer({ // con esto creamos una instancia de nuestro archivo que nos guardara en uploads
+  dest: 'uploads/'
+})
 
 app.get('/', async function (req, res) { //los dos parametros de una petición request y el response 
 
@@ -25,8 +30,10 @@ app.get('/', async function (req, res) { //los dos parametros de una petición r
 
 })
 
-app.post('/', async (req, res) => {
-
+// para indicarle a multer de donde va a sacar el archivo lo hacemos de la siguiente manera llamamos nuestra instancia del archivo que en este 
+//caso le pusimos upload despues llamamos al metodo single el cual resive un parametro que ese es el nombre campo que le 
+// pusimos al archivo que en este caso desde la coleccion de postman le pusimos file
+app.post('/', upload.single('file'), async (req, res) => {
   try {
     const { user, message, chat } = req.body;
     const result = await controller.addMessage(user, message, chat);
