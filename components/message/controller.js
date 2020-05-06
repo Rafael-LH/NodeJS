@@ -2,13 +2,21 @@ const store = require('./store');
 const responseMessage = {
   notFound: 'Mensaje no encontrado!'
 }
-function addMessage(user, message, chat) {
+function addMessage(user, message, chat, file) {
   return new Promise((resolve, reject) => {
     if (user, message, chat) {
+
+      let fileUrl = '';
+      if (file) {
+        // files: es mi carpeta donde estara mi archivo estatico
+        // http://localhost:3000 automaticamnete apunta a mi carpeta de public entoces accedo a files y descarga el archivo en automatico
+        fileUrl = `http://localhost:3000/files/${file.filename}`
+      }
       const fullMessage = {
         chat: chat, // chat is id user
         user: user,
         message, message,
+        file: fileUrl,
         date: new Date(),
       }
       store.add(fullMessage);
