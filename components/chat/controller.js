@@ -2,7 +2,7 @@ const store = require('./store');
 
 async function addChat(users) {
   return new Promise((resolve, reject) => {
-    if (users) {
+    if (users, Array.isArray(users)) {
       const chat = {
         users: users,
         date: new Date(),
@@ -10,13 +10,13 @@ async function addChat(users) {
       store.add(chat);
       resolve(chat);
     } else {
-      reject(`Los datos son incorrectos`)
+      reject(`Los datos son incorrectos`);
     }
   })
 }
-const listChats = () => {
+const listChats = (userId) => {
   return new Promise(async (resolve, reject) => {
-    const chats = await store.list();
+    const chats = await store.list(userId);
     resolve(chats);
   })
 }

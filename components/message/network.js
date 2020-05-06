@@ -7,7 +7,7 @@ const controller = require('./controller')
 app.get('/', async function (req, res) { //los dos parametros de una petición request y el response 
 
   try {
-    const filterMessages = req.query.user || null;
+    const filterMessages = req.query.chat || null;
     const message = await controller.getMessages(filterMessages);
     const fullMessage = await message;
     response.success(req, res, fullMessage, 200);
@@ -28,8 +28,8 @@ app.get('/', async function (req, res) { //los dos parametros de una petición r
 app.post('/', async (req, res) => {
 
   try {
-    const { user, message } = req.body;
-    const result = await controller.addMessage(user, message);
+    const { user, message, chat } = req.body;
+    const result = await controller.addMessage(user, message, chat);
     response.success(req, res, result, 201);
   } catch (error) {
     response.error(req, res, 'Información invalida ❌', 400, 'Bad Request')

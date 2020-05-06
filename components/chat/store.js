@@ -4,9 +4,13 @@ function addChat(chat) {
   const myChat = new Model(chat);
   myChat.save();
 }
-function listChats() {
+function listChats(userId) {
   return new Promise((resolve, reject) => {
-    Model.find()
+    let filter = {}
+    if (userId) {
+      filter = { users: userId }
+    }
+    Model.find(filter)
       .populate('users')
       .exec((error, dataPopulate) => {
         if (!error) {

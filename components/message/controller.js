@@ -2,10 +2,11 @@ const store = require('./store');
 const responseMessage = {
   notFound: 'Mensaje no encontrado!'
 }
-function addMessage(user, message) {
+function addMessage(user, message, chat) {
   return new Promise((resolve, reject) => {
-    if (user, message) {
+    if (user, message, chat) {
       const fullMessage = {
+        chat: chat, // chat is id user
         user: user,
         message, message,
         date: new Date(),

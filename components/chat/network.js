@@ -13,9 +13,10 @@ app.post('/', async (req, res) => {
     response.error(req, res, `Ha ocurrido algun error interno`, 500, error);
   }
 });
-app.get('/', async (req, res) => {
+app.get('/:userId', async (req, res) => {
   try {
-    const result = await controller.listChats();
+    const { userId } = req.params;
+    const result = await controller.listChats(userId);
     response.success(req, res, result, 200);
   } catch (error) {
     response.error(req, res, error, 500);

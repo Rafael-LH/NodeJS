@@ -9,7 +9,7 @@ function getMessages(filterMessages) {
   return new Promise((resolve, reject) => {
     let filter = {}
     if (filterMessages !== null) {
-      filter = { user: filterMessages }
+      filter = { chat: filterMessages }
     }
     // Model.find() de esta manera nos traemos todos los datos que esten en nuestra tabla messages. Tiene que ser de forma asincrona
     // Model.find({user: "Edgar"}) podemos filtar los registros de esta manera
@@ -39,11 +39,19 @@ async function updateMessage(id, message) {
   return newMessage;
 }
 async function findMessage(id) {
-  const result = await Model.findOne({
-    _id: id
+  return new Promise((resolve, reject) => {
+    Model.findOne({
+      chat: id
+    })
+      .populate('user')
+      .exec((error, dataPopulated) => {
+        if (!error) {
+          resolve(dataPopulated);
+        } else {
+          reject(error);
+        }
+      })
   })
-  const message = await result;
-  return message
 }
 const deleteMessage = async id => {
   await Model.deleteOne({
