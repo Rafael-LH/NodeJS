@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- el siguiente archivo por defecto nos lo crea socket.io para podernos conectar por sockets -->
+  <script src="/socket.io/socket.io.js"></script>
+  <title>WebSockets</title>
+</head>
+
+<body>
+  <h1>Server WebSockets</h1>
+  <h2>Mira la consola</h2>
+
+  <script>
+    // con esto creamos la conexion y le paso un parametro de configuracion para asegurarme de que las conexiones siempre sean nuevas
+    const socket = io.connect('http://localhost:3000', {
+      forceNew: true
+    });
+
+    // el primer parametro tiene que ser el mismo que le pase en el socket.emit que esta en el index para que pueda funcionar
+    socket.on('message', (data) => {
+      console.log(data);
+    });
+
+  </script>
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 const store = require('./store');
+const { socket } = require('../../socket');
 const responseMessage = {
   notFound: 'Mensaje no encontrado!'
 }
@@ -20,6 +21,10 @@ function addMessage(user, message, chat, file) {
         date: new Date(),
       }
       store.add(fullMessage);
+
+      // emit message Websocket
+      socket.io.emit('message', fullMessage);
+
       resolve(fullMessage)
     } else {
       console.error('[MessageController] No hay usuario o mensaje');
