@@ -4,7 +4,7 @@ const app = express();
 // el modulo de http es un modulo interno de node por lo tanto no lo instalamos con npm
 const server = require('http').Server(app);
 
-const cors = require('cors');
+// const cors = require('cors');
 const bodyParser = require('body-parser') //Esta dependencia nos sirve para poder acceder a la información del request que nos esta llegando
 const socket = require('./socket');
 const path = require('path');
@@ -13,7 +13,7 @@ const PORT = 3000;
 const db = require('./db')
 db(); // conexion a la base de datos
 
-app.use(cors);
+// app.use(cors);
 
 // connect socket
 socket.connect(server);
@@ -47,6 +47,6 @@ router(app);
 app.use(router);
 
 // Para que nuestra aplicación este escuchando las rutas lo hacemos con lo siguiente
-server.listen(PORT, (req, res) => {
+server.listen(PORT, function () {
   console.log(`La aplicación esta escuchando en  http://localhost:${PORT}`);
 });
