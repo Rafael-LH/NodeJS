@@ -39,12 +39,8 @@ app.get('/', (req, res) => {
   res.sendFile('index.html', { root: 'public' })
 })
 
-// const router = require('./components/message/network')
 const router = require('./network/routes');
 router(app);
-
-// le paso mis rutas a app 
-app.use(router);
 
 // Para que nuestra aplicación este escuchando las rutas lo hacemos con lo siguiente
 server.listen(PORT, function () {

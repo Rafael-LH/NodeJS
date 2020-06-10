@@ -1,10 +1,10 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 
 const response = require('../../network/response');
 const controller = require('./controller')
 
-app.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { users } = req.body;
     const result = await controller.addChat(users);
@@ -13,7 +13,7 @@ app.post('/', async (req, res) => {
     response.error(req, res, `Ha ocurrido algun error interno`, 500, error);
   }
 });
-app.get('/:userId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
     const result = await controller.listChats(userId);
@@ -22,4 +22,4 @@ app.get('/:userId', async (req, res) => {
     response.error(req, res, error, 500);
   }
 })
-module.exports = app;
+module.exports = router;

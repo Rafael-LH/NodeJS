@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer'); // nos sirve para leer archivos que nos bienen por req y guardar en disco
-const app = express();
+const router = express.Router();
 
 const response = require('../../network/response');
 const controller = require('./controller')
@@ -9,7 +9,7 @@ const upload = multer({ // con esto creamos una instancia de nuestro archivo que
   dest: 'public/files' // automaticamente el distimo parte de la raiz del proyecto es decir ./ 
 })
 
-app.get('/', async function (req, res) { //los dos parametros de una petición request y el response 
+router.get('/', async function (req, res) { //los dos parametros de una petición request y el response 
 
   try {
     const filterMessages = req.query.chat || null;
@@ -33,7 +33,7 @@ app.get('/', async function (req, res) { //los dos parametros de una petición r
 // para indicarle a multer de donde va a sacar el archivo lo hacemos de la siguiente manera llamamos nuestra instancia del archivo que en este 
 // caso le pusimos upload despues llamamos al metodo single el cual resive un parametro que ese es el nombre campo que le 
 // pusimos al archivo que en este caso desde la coleccion de postman le pusimos file en el form-data
-app.post('/', upload.single('file'), async (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
   try {
     const { user, message, chat } = req.body;
     // console.log(req.file);
@@ -44,7 +44,7 @@ app.post('/', upload.single('file'), async (req, res) => {
   }
 })
 
-app.patch('/:id', async (req, res) => { // actualiza parte de un registro y PUT actualiza toda la información
+router.patch('/:id', async (req, res) => { // actualiza parte de un registro y PUT actualiza toda la información
   try {
     const { id } = req.params
     const { message } = req.body
@@ -55,7 +55,7 @@ app.patch('/:id', async (req, res) => { // actualiza parte de un registro y PUT 
     response.error(req, res, 'NO se pudo actualizar el registro. ❌', 400, 'Bad Request');
   }
 })
-app.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params
     const { message, status } = await controller.findMessage(id)
@@ -65,7 +65,7 @@ app.get('/:id', async (req, res) => {
     response.error(req, res, 'Mensaje no encontrado ⚠︎', 404, 'Not Found');
   }
 })
-app.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params
     const result = await controller.deleteMessage(id);
@@ -74,4 +74,4 @@ app.delete('/:id', async (req, res) => {
     response.error(req, res, 'Ha ocurrido algun error ☹️', 500, error);
   }
 })
-module.exports = app;
+module.exports = router;
